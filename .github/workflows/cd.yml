@@ -1,4 +1,4 @@
-name: CD
+name: Build & Release
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  ci:
-    name: CI
+  build_release:
+    name: Build & Release
     runs-on: ubuntu-latest
     steps:
 
@@ -75,6 +75,6 @@ jobs:
           VERSION: ${{ steps.tag_version.outputs.new_tag }}
 
       - name: Push
-        run: make build
+        run: make push
         env:
           VERSION: ${{ steps.tag_version.outputs.new_tag }}
