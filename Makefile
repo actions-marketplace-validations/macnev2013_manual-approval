@@ -7,6 +7,7 @@ build:
 		exit 1; \
 	fi
 	docker build -t $(IMAGE_REPO):$$VERSION .
+	docker tag $(IMAGE_REPO):$$VERSION $(IMAGE_REPO):latest
 
 .PHONY: push
 push:
@@ -15,6 +16,7 @@ push:
 		exit 1; \
 	fi
 	docker push $(IMAGE_REPO):$$VERSION
+	docker push $(IMAGE_REPO):latest
 
 .PHONY: test
 test:

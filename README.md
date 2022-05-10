@@ -26,7 +26,7 @@ In all cases, `manual-approval` will close the initial GitHub issue.
 
 ```yaml
 steps:
-  - uses: trstringer/manual-approval@v1
+  - uses: macnev2013/manual-approval@latest
     with:
       secret: ${{ github.TOKEN }}
       approvers: user1,user2
