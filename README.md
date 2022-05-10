@@ -31,6 +31,9 @@ steps:
       secret: ${{ github.TOKEN }}
       approvers: user1,user2
       minimum-approvals: 1
+      issue-title: 'Manual Approval'
+      issue-body: |
+        "Issue Body"
 ```
 
 - `approvers` is a comma-delimited list of all required approvers.

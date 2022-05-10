@@ -44,17 +44,20 @@ func (a approvalEnvironment) runURL() string {
 }
 
 func (a *approvalEnvironment) createApprovalIssue(ctx context.Context) error {
-	issueTitle := fmt.Sprintf("Manual approval required for workflow run %d", a.runID)
+	issueTitle := fmt.Sprintf("%s %d", os.Getenv(envIssueTitle), a.runID)
 	issueBody := fmt.Sprintf(`Workflow is pending manual review.
 URL: %s
 
 Required approvers: %s
 
-Respond %s to continue workflow or %s to cancel.`,
+Respond %s to continue workflow or %s to cancel.
+
+%s`,
 		a.runURL(),
 		a.approvers,
 		formatAcceptedWords(approvedWords),
 		formatAcceptedWords(deniedWords),
+		os.Getenv(envIssueBody)
 	)
 	var err error
 	a.approvalIssue, _, err = a.client.Issues.Create(ctx, a.repoOwner, a.repo, &github.IssueRequest{
