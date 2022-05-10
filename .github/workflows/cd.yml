@@ -115,4 +115,4 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/manual-approval:${{ steps.tag_version.outputs.new_tag }}
+          tags: ghcr.io/${{ github.repository_owner }}/manual-approval:${{ steps.tag_version.outputs.new_tag }},ghcr.io/${{ github.repository_owner }}/manual-approval:latest
