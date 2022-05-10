@@ -9,7 +9,7 @@ jobs:
   build_release:
     permissions:
       packages: write
-      content: write
+      contents: write
 
     name: Build & Release
     runs-on: ubuntu-latest
