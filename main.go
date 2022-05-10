@@ -153,9 +153,16 @@ func main() {
 	signal.Notify(killSignalChannel, os.Interrupt)
 
 	commentLoopChannel := newCommentLoopChannel(ctx, apprv, client, approvers, minimumApprovals)
+	
+	timeoutDuration, err := strconv.Atoi(os.Getenv(envVarApprovalWait))
+	if err != nil {
+		fmt.Printf("error getting timeoutDuration: %v\n", err)
+		os.Exit(1)
+	}
+	timeDuration := time.Second * time.Duration(timeoutDuration)
 
 	select {
-	case _ = <-time.After(time.Second * os.Getenv(envVarApprovalWait)):
+	case _ = <-time.After(timeDuration):
 		os.Exit(1)
 	case exitCode := <-commentLoopChannel:
 		os.Exit(exitCode)
