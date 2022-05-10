@@ -69,16 +69,14 @@ jobs:
           cmd: |
             yq -i '.runs.image = "docker://ghcr.io/macnev2013/manual-approval:${{ steps.tag_version.outputs.new_tag }}"' 'action.yaml'
 
-      - name: Update files
+      - name: Push updated files
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "<>"
+          git config user.email "noreply@github.com"
 
           git add .
           git commit -m "chore: version bump"
-          git tag -a ${{ steps.tag_version.outputs.new_tag }}
           git push origin main
-          git push origin --tag
 
       - name: Creating Github Release
         uses: ncipollo/release-action@v1
