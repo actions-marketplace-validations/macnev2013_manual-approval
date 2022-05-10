@@ -60,6 +60,14 @@ jobs:
         with:
           cmd: |
             yq -i '.runs.image = "docker://ghcr.io/macnev2013/manual-approval:${{ steps.tag_version.outputs.new_tag }}"' 'action.yaml'
+      - name: Update files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "<>"
+
+          git add .
+          git commit -m "chore: version bump"
+          git push origin main
 
       - name: Bump version and push tag
         id: tag_version
