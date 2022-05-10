@@ -31,6 +31,7 @@ steps:
       secret: ${{ github.TOKEN }}
       approvers: user1,user2
       minimum-approvals: 1
+      approval-wait: 600
       issue-title: 'Manual Approval'
       issue-body: |
         "Issue Body"
@@ -38,3 +39,4 @@ steps:
 
 - `approvers` is a comma-delimited list of all required approvers.
 - `minimum-approvals` is an integer that sets the minimum number of approvals required to progress the workflow. Defaults to ALL approvers.
+- `approval-wait` is an integer that sets time to wait for the approval before failing the build

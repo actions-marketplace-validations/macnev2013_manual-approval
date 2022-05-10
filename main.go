@@ -155,6 +155,8 @@ func main() {
 	commentLoopChannel := newCommentLoopChannel(ctx, apprv, client, approvers, minimumApprovals)
 
 	select {
+	case <-time.After(time.Second * os.Getenv(envVarApprovalWait)):
+		os.Exit(1)
 	case exitCode := <-commentLoopChannel:
 		os.Exit(exitCode)
 	case _ = <-killSignalChannel:
