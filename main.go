@@ -163,6 +163,20 @@ func main() {
 
 	select {
 	case _ = <-time.After(timeDuration):
+		timeoutComment := "Build timed out before approval."
+		_, _, err := client.Issues.CreateComment(ctx, apprv.repoOwner, apprv.repo, apprv.approvalIssueNumber, &github.IssueComment{
+			Body: &timeoutComment,
+		})
+		if err != nil {
+			fmt.Printf("error in commenting: %v\n", err)
+			os.Exit(1)
+		}
+		newState := "closed"
+		_, _, err = client.Issues.Edit(ctx, apprv.repoOwner, apprv.repo, apprv.approvalIssueNumber, &github.IssueRequest{State: &newState})
+		if err != nil {
+			fmt.Printf("error in closing issue: %v\n", err)
+			os.Exit(1)
+		}
 		os.Exit(1)
 	case exitCode := <-commentLoopChannel:
 		os.Exit(exitCode)
