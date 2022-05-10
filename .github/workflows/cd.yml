@@ -79,20 +79,22 @@ jobs:
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.changelog.outputs.changelog }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+      - name: Login to Registry
+        uses: docker/login-action@v1
         with:
+          # registry: docker.pkg.github.com
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_TOKEN }}
 
-      - name: Build
-        run: make build
-        env:
-          VERSION: ${{ steps.tag_version.outputs.new_tag }}
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-buildx-
 
-      - name: Push
-        run: make push
-        env:
-          VERSION: ${{ steps.tag_version.outputs.new_tag }}
-
+      - uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/manual-approval:${{ steps.tag_version.outputs.new_tag }}
