@@ -57,7 +57,7 @@ Respond %s to continue workflow or %s to cancel.
 		a.approvers,
 		formatAcceptedWords(approvedWords),
 		formatAcceptedWords(deniedWords),
-		os.Getenv(envIssueBody)
+		os.Getenv(envIssueBody),
 	)
 	var err error
 	a.approvalIssue, _, err = a.client.Issues.Create(ctx, a.repoOwner, a.repo, &github.IssueRequest{
