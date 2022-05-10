@@ -11,8 +11,8 @@ const (
 	envVarToken            string = "INPUT_SECRET"
 	envVarApprovers        string = "INPUT_APPROVERS"
 	envVarMinimumApprovals string = "INPUT_MINIMUM-APPROVALS"
-	envIssueTitle          string = "INPUT_ISSUE_TITLE"
-	envIssueBody           string = "INPUT_ISSUE_BODY"
+	envIssueTitle          string = "INPUT_ISSUE-TITLE"
+	envIssueBody           string = "INPUT_ISSUE-BODY"
 )
 
 var (
